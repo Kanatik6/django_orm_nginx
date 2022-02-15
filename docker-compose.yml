@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+
+  web:
+    container_name: nginx_test
+    build:
+      context: ./
+    expose:
+      - 8000
+    volumes:
+      - ./:/app/
+      - static_volume:/staticfiles
+    command: >
+      sh -c "python3 manage.py makemigrations  &&
+             python3 manage.py migrate  &&
+             python3 manage.py collectstatic --noinput &&
+             exec gunicorn test_f.wsgi:application -b 0.0.0.0:8000 --reload"
+  nginx:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - ./docker/nginx/:/etc/nginx/conf.d
+      - static_volume:/staticfiles/
+
+volumes:
+  static_volume:
