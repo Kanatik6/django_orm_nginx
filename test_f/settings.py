@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'test_f.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME' :os.path.join(BASE_DIR, 'db.sqlite3')
     }
 }
 
@@ -129,10 +129,10 @@ USE_TZ = True
 # то, что написано тут, должно быть написано после location статика
 STATIC_URL = '/static/'
 # то, что написано тут, должно быть написано внутри location 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'db.sqlite3')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
